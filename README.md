@@ -26,22 +26,24 @@ This lab bridges offensive security concepts with defensive SOC analysis.
 - Perform cleanup and incident response simulation  
 - Develop SOC-style interpretation of attack behavior  
 
-##  Lab Environment
+## Lab Environment
 
 - Operating System: Kali Linux  
 - Network Mode: Host-only Adapter (VirtualBox)  
 - Attacker IP: 192.168.56.121  
 - Tools: Metasploit Framework, msfvenom, netstat, ps
   
-### Tools Used
+## Tools Used
 - Metasploit Framework  
 - msfvenom  
 - netstat  
 - ps  
 - Linux system utilities  
 
-###  Methodology
- 1. Victim User Creation
+##  Methodology
+
+ ### 1. Victim User Creation
+ 
 A low-privilege user was created to simulate a real-world compromised account:
 ```bash
 sudo adduser victim --disabled-password --gecos ""
